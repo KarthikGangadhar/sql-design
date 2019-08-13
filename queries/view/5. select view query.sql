@@ -1,0 +1,3 @@
+use doctoraldb;
+
+SELECT * FROM SUPERVISION_INFO;

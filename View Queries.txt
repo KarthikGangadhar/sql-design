@@ -1,0 +1,76 @@
+# creating view
+
+USE `doctoraldb`;
+CREATE  OR REPLACE VIEW SUPERVISION_INFO (IId , IFName , ILName , SId , SFName , SLName , SStSem , SStYear) AS
+    SELECT 
+        instructor.InstructorId,
+        instructor.FName,
+        instructor.LName,
+        phdstudent.StudentId,
+        phdstudent.FName,
+        phdstudent.LName,
+        phdstudent.StSem,
+        phdstudent.StYear
+    FROM
+        instructor,
+        phdstudent
+    WHERE
+        phdstudent.Supervisor = instructor.InstructorId;
+		
+# Retrieve for each instructor the IId, IFName, ILName, NoOfStudentsSupervised (the last is a COUNT aggregate function).
+
+SELECT	IId, IFName, ILName, count(SId) as NoOfStudentsSupervised
+FROM  supervision_info
+GROUP BY IId;
+
+# Retrieve the student names (FName, LName) whose supervisor is FName=Ahmed and LName=Sarhan
+
+SELECT	SFName, SLName
+FROM  supervision_info
+Where IFName="Ahmed" and ILName="Sarhan";
+
+# Retrieve the supervisor names (FName, LName) for the students whose names (FName, LName) are Ife,Jelani and Maya,Smith and Raymond,Wilson (include the student names in the result). 
+
+SELECT	SFName, SLName, IFName, ILName
+FROM  supervision_info
+Where (SFName="Ife" and SLName="Jelani") or (SFName="Maya" and SLName="Smith") or (SFName="Raymond" and SLName="Wilson");
+
+#(i)	Retrieve the PHDSTUDENT Id, FName, LName, and MILESTONE MName and PassDate for the milestones passed by each student.
+
+SELECT p.StudentId, p.FName, p.LName, m.Mname, mp.PassDate
+FROM phdstudent as p, milestone as m, milestonespassed as mp
+where p.StudentId = mp.StudentId and mp.MId = m.MId;
+
+#(ii)	Retrieve the PHDSTUDENT Id, FName, Lname, and the supporting GRANT Name for all students who are GRAs.
+
+SELECT p.StudentId, p.FName, p.LName, gt.GrantTitle 
+FROM phdstudent as p, gra as g, grants as gt
+where p.StudentId = g.StudentId and g.Funding = gt.AccountNo;
+
+#(iii)	Retrieve the PHDSTUDENT Id, FName, Lname, and the COURSE Name they are working on for all students who are GTAs.
+
+SELECT p.StudentId, p.FName, p.LName, c.CName 
+FROM phdstudent as p, gta as g, course as c, section as s 
+where p.StudentId = g.StudentId and  g.SectionId = s.SectionId and s.CourseId = c.CourseId;
+
+		
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `doctoraldb`.`supervision_info` (`IId` , `IFName` , `ILName` , `SId` , `SFName` , `SLName` , `SStSem` , `SStYear`) AS
+    SELECT 
+        `doctoraldb`.`instructor`.`InstructorId` AS `InstructorId`,
+        `doctoraldb`.`instructor`.`FName` AS `FName`,
+        `doctoraldb`.`instructor`.`LName` AS `LName`,
+        `doctoraldb`.`phdstudent`.`StudentId` AS `StudentId`,
+        `doctoraldb`.`phdstudent`.`FName` AS `FName`,
+        `doctoraldb`.`phdstudent`.`LName` AS `LName`,
+        `doctoraldb`.`phdstudent`.`StSem` AS `StSem`,
+        `doctoraldb`.`phdstudent`.`StYear` AS `StYear`
+    FROM
+        (`doctoraldb`.`instructor`
+        JOIN `doctoraldb`.`phdstudent`)
+    WHERE
+        (`doctoraldb`.`phdstudent`.`Supervisor` = `doctoraldb`.`instructor`.`InstructorId`)
+		

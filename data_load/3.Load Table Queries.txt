@@ -1,0 +1,179 @@
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_Instructor.txt' 
+into table instructor 
+columns terminated by ','
+lines terminated by '\r\n' 
+ignore 1 lines;
+
+select * from instructor;
+
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_PhDStudent.3.txt' 
+into table phdstudent 
+columns terminated by ','
+lines terminated by '\r\n'
+ignore 1 lines;
+
+select * from phdstudent;
+
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_Course.txt' 
+into table course 
+columns terminated by ','
+lines terminated by '\r\n'
+ignore 1 lines;
+
+select * from course;
+
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_Section.txt' 
+into table section 
+columns terminated by ','
+lines terminated by '\r\n'
+ignore 1 lines;
+
+select * from section;
+
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_Milestone.2.txt' 
+into table milestone 
+columns terminated by ','
+lines terminated by '\r\n'
+ignore 1 lines;
+
+select * from milestone;
+
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_MilestonesPassed.1.txt' 
+into table milestonespassed 
+columns terminated by ','
+lines terminated by '\r\n'
+ignore 1 lines;
+
+select * from milestonespassed;
+
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_CoursesTaught.1.txt' 
+into table coursetaught 
+columns terminated by ','
+lines terminated by '\r\n'
+ignore 1 lines;
+
+select * from coursetaught;
+
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_ScholarshipSupport.txt' 
+into table scholarshipsupport 
+columns terminated by ','
+lines terminated by '\r\n'
+ignore 1 lines;
+
+select * from scholarshipsupport;
+
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_Grants.txt' 
+into table grants 
+columns terminated by ','
+lines terminated by '\r\n'
+ignore 1 lines;
+
+select * from grants;
+
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_GTA.txt' 
+into table gta 
+columns terminated by ','
+lines terminated by '\r\n'
+ignore 1 lines;
+
+select * from gta;
+
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_GRA.txt' 
+into table gra 
+columns terminated by ','
+lines terminated by '\r\n'
+ignore 1 lines;
+
+select * from gra;
+
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_TT.txt' 
+into table tt 
+columns terminated by ','
+lines terminated by '\r\n'
+ignore 1 lines;
+
+select * from tt;
+
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_SelfSupport.txt' 
+into table selfsupport 
+columns terminated by ','
+lines terminated by '\r\n'
+ignore 1 lines;
+
+select * from selfsupport;
+
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_PhDCommittee.txt' 
+into table phdcommittee 
+columns terminated by ','
+lines terminated by '\r\n'
+ignore 1 lines;
+
+select * from phdcommittee;
+
+/*************************************************************************/
+
+use doctoraldb;
+
+load data infile 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\_GrantAssociated.txt' 
+into table grantassociated 
+columns terminated by ','
+lines terminated by '\r\n'
+ignore 1 lines;
+
+select * from grantassociated;

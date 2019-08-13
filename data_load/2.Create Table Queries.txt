@@ -1,0 +1,157 @@
+/*************************************************************************/
+
+CREATE TABLE `doctoraldb`.`instructor` (
+  `InstructorId` VARCHAR(45) NOT NULL,
+  `FName` VARCHAR(45) NULL,
+  `LName` VARCHAR(45) NULL,
+  `StartDate` VARCHAR(15) NOT NULL,
+  `Degree` VARCHAR(45) NULL,
+  `Rank` VARCHAR(45) NULL,
+  `Type` VARCHAR(15) NULL,
+  PRIMARY KEY (`InstructorId`));
+
+/*************************************************************************/  
+
+CREATE TABLE `doctoraldb`.`phdstudent` (
+  `StudentId` VARCHAR(45) NOT NULL,
+  `FName` VARCHAR(45) NULL,
+  `LName` VARCHAR(45) NULL,
+  `StSem` VARCHAR(15) NOT NULL,
+  `StYear` INT NOT NULL,
+  `Supervisor` VARCHAR(45) NULL,
+  PRIMARY KEY (`StudentId`),
+  CONSTRAINT `Supervisor`
+    FOREIGN KEY (`Supervisor`)
+    REFERENCES `doctoraldb`.`instructor` (`InstructorId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+/*************************************************************************/
+
+CREATE TABLE `doctoraldb`.`course` (
+  `CourseId` VARCHAR(45) NOT NULL,
+  `CName` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`CourseId`));
+
+/*************************************************************************/
+
+CREATE TABLE `doctoraldb`.`section` (
+  `SectionId` VARCHAR(45) NOT NULL,
+  `CourseId` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`SectionId`),
+  CONSTRAINT `CourseId`
+    FOREIGN KEY (`CourseId`)
+    REFERENCES `doctoraldb`.`course` (`CourseId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+/*************************************************************************/
+
+CREATE TABLE `doctoraldb`.`milestonespassed` (
+  `StudentId` VARCHAR(45) NOT NULL,
+  `MId` VARCHAR(45) NOT NULL,
+  `PassDate` VARCHAR(45) NULL,
+  PRIMARY KEY (`StudentId`,`MId`),
+  FOREIGN KEY (`StudentId`) REFERENCES `doctoraldb`.`phdstudent` (`StudentId`),
+  FOREIGN KEY (`MId`) REFERENCES `doctoraldb`.`milestone` (`MId`));
+  
+/*************************************************************************/
+	
+CREATE TABLE `doctoraldb`.`milestone` (
+  `MId` VARCHAR(45) NOT NULL,
+  `MName` VARCHAR(45) NULL,
+  PRIMARY KEY (`MID`));
+
+/*************************************************************************/
+
+CREATE TABLE `doctoraldb`.`grantassociated` (
+  `AccountNo` VARCHAR(45) NOT NULL,
+  `InstructorId` VARCHAR(45) NOT NULL,
+  `InstrType` VARCHAR(45) NULL,
+  PRIMARY KEY (`AccountNo`, `InstructorId`),
+  FOREIGN KEY (`AccountNo`) REFERENCES `doctoraldb`.`grants` (`AccountNo`),
+  FOREIGN KEY (`InstructorId`) REFERENCES `doctoraldb`.`tt` (`InstructorId`));
+
+/*************************************************************************/
+
+CREATE TABLE `doctoraldb`.`phdcommittee` (
+  `StudentId` VARCHAR(45) NOT NULL,
+  `InstructorId` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`StudentId`,`InstructorId`),
+  FOREIGN KEY (`StudentId`) REFERENCES `doctoraldb`.`phdstudent` (`StudentId`),
+  FOREIGN KEY (`InstructorId`) REFERENCES `doctoraldb`.`tt` (`InstructorId`));
+
+/*************************************************************************/
+
+CREATE TABLE `doctoraldb`.`selfsupport` (
+  `StudentId` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`StudentId`),
+  FOREIGN KEY (`StudentId`) REFERENCES `doctoraldb`.`phdstudent` (`StudentId`));
+
+/*************************************************************************/
+
+CREATE TABLE `doctoraldb`.`tt` (
+  `InstructorId` VARCHAR(45) NOT NULL,
+  `NoOfPhDStudents` INT NULL,
+  PRIMARY KEY (`InstructorId`),
+  CONSTRAINT `InstructorId`
+    FOREIGN KEY (`InstructorId`)
+    REFERENCES `doctoraldb`.`instructor` (`InstructorId`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);
+
+/*************************************************************************/
+    
+CREATE TABLE `doctoraldb`.`coursetaught` (
+  `CourseId` VARCHAR(45) NOT NULL,
+  `InstructorId` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`CourseId`,`InstructorId`),
+  FOREIGN KEY (`CourseId`) REFERENCES `doctoraldb`.`course` (`CourseId`),
+  FOREIGN KEY (`InstructorId`) REFERENCES `doctoraldb`.`instructor` (`InstructorId`));
+
+/*************************************************************************/
+
+CREATE TABLE `doctoraldb`.`scholarshipsupport` (
+  `StudentId` VARCHAR(45) NOT NULL,
+  `Type` VARCHAR(45) NULL,
+  `Source` VARCHAR(45) NULL,
+  PRIMARY KEY (`StudentId`),
+  CONSTRAINT `StudentId`
+    FOREIGN KEY (`StudentId`)
+    REFERENCES `doctoraldb`.`phdstudent` (`StudentId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
+/*************************************************************************/
+
+CREATE TABLE `doctoraldb`.`grants` (
+  `AccountNo` VARCHAR(45) NOT NULL,
+  `Type` VARCHAR(45) NULL,
+  `GrantTitle` VARCHAR(45) NULL,
+  `Sourc` VARCHAR(45) NULL,
+  `StDate` VARCHAR(45) NULL,
+  `EndDate` VARCHAR(45) NULL,
+  `StAmount` INT NULL,
+  `CurrBalance` INT NULL,
+  PRIMARY KEY (`AccountNo`));
+
+/*************************************************************************/
+
+CREATE TABLE `doctoraldb`.`gta` (
+  `SectionId` VARCHAR(45) NOT NULL,
+  `MonthlyPay` INT NOT NULL,
+  `StudentId` VARCHAR(45) NULL,
+  PRIMARY KEY (`SectionId`),
+  FOREIGN KEY (`SectionId`) REFERENCES `doctoraldb`.`section` (`SectionId`),
+  FOREIGN KEY (`StudentId`) REFERENCES `doctoraldb`.`phdstudent` (`StudentId`));
+
+/*************************************************************************/
+
+CREATE TABLE `doctoraldb`.`gra` (
+  `StudentId` VARCHAR(45) NOT NULL,
+  `Funding` VARCHAR(45) ,
+  `MonthlyPay` INT ,
+  PRIMARY KEY (`StudentId`),
+  FOREIGN KEY (`StudentId`) REFERENCES `doctoraldb`.`phdstudent` (`StudentId`),
+  FOREIGN KEY (`Funding`) REFERENCES `doctoraldb`.`grants` (`AccountNo`));
+
